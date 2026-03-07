@@ -7,7 +7,7 @@ export interface IErrorResponse {
   statusCode?: number;
   success: boolean;
   message: string;
-  errorSources?: IErrorSources[];
+  errorSources: IErrorSources[];
   stack?: string | undefined;
   error?: unknown;
 }

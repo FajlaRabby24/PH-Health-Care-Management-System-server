@@ -2,6 +2,7 @@ import { toNodeHandler } from "better-auth/node";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
+import cron from "node-cron";
 import path from "path";
 import qs from "qs";
 import { envVars } from "./app/config/env";
@@ -41,16 +42,16 @@ app.use(
   }),
 );
 
-// cron.schedule("*/25 * * * *", async () => {
-//   try {
-//     console.log(`Running cron job to cancel unpaid appointments...`);
-//     // await AppointmentService.cancelUnpaidAppointments();
-//   } catch (error: any) {
-//     console.error(
-//       `Error occurred while canceling unpaid appointments: ${error.message}`,
-//     );
-//   }
-// });
+cron.schedule("*/25 * * * *", async () => {
+  try {
+    console.log(`Running cron job to cancel unpaid appointments...`);
+    // await AppointmentService.cancelUnpaidAppointments();
+  } catch (error: any) {
+    console.error(
+      `Error occurred while canceling unpaid appointments: ${error.message}`,
+    );
+  }
+});
 
 app.use("/api/v1", indexRoutes);
 
