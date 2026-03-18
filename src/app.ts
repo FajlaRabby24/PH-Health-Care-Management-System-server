@@ -2,6 +2,7 @@ import { toNodeHandler } from "better-auth/node";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
+import helmet from "helmet";
 import cron from "node-cron";
 import path from "path";
 import qs from "qs";
@@ -13,7 +14,7 @@ import { PaymentController } from "./app/modules/payment/payment.controller";
 import { indexRoutes } from "./app/routes";
 
 const app: Application = express();
-
+app.use(helmet());
 app.set("query parser", (str: string) => qs.parse(str));
 
 app.set("view engine", "ejs");
@@ -46,6 +47,7 @@ cron.schedule("*/25 * * * *", async () => {
   try {
     console.log(`Running cron job to cancel unpaid appointments...`);
     // await AppointmentService.cancelUnpaidAppointments();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(
       `Error occurred while canceling unpaid appointments: ${error.message}`,
